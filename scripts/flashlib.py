@@ -10,16 +10,9 @@ import h5py
 import shutil
 import scipy
 import os
-<<<<<<< HEAD
-<<<<<<< HEAD
 import scipy.stats as scstats
 import inspect
-=======
 from scipy.stats import binned_statistic
->>>>>>> 55106ef (GetCellsInSphere function added)
-=======
-from scipy.stats import binned_statistic
->>>>>>> 55106ef (GetCellsInSphere function added)
 
 debug = False
 
