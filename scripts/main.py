@@ -21,7 +21,7 @@ class NIF:
         if withpath: fname = self.simpath+fname
         return fname
 
-    def extract_sphere_data(self, sphere_center=[0,0,0], sphere_radius=0.05, files=None, verbose=1):
+    def extract_sphere_data(self, sphere_radius=0.05, sphere_center=[0,0,0], files=None, verbose=1):
         # loop over plt files
         if files is None: files = self.plt_files # default is all plt files
         for fname in files:
@@ -32,17 +32,17 @@ class NIF:
                 gg = fl.FlashGG(fname, verbose=verbose-1)
                 # extract data for the required datasets
                 datasets = ["dens", "velx", "vely", "velz", "magx", "magy", "magz"]
-                cell_datas, cell_coords = gg.GetCellsInSphere(dsets=datasets, sphere_center=sphere_center, sphere_radius=sphere_radius)
+                cell_obj = gg.GetCells(dsets=datasets, sphere_radius=sphere_radius, sphere_center=sphere_center)
                 class ret:
                     time = gg.scalars["time"]
-                    dens = cell_datas[0]
-                    velx = cell_datas[1]
-                    vely = cell_datas[2]
-                    velz = cell_datas[3]
-                    magx = cell_datas[4]
-                    magy = cell_datas[5]
-                    magz = cell_datas[6]
-                    coords = cell_coords
+                    dens = cell_obj.cell_dat[0]
+                    velx = cell_obj.cell_dat[1]
+                    vely = cell_obj.cell_dat[2]
+                    velz = cell_obj.cell_dat[3]
+                    magx = cell_obj.cell_dat[4]
+                    magy = cell_obj.cell_dat[5]
+                    magz = cell_obj.cell_dat[6]
+                    coords = cell_obj.cell_pos
                 # write to file
                 with open(outfile, "wb") as fobj:
                     dill.dump(ret, fobj)
